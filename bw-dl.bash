@@ -13,3 +13,6 @@ signature="$(echo "$auth" | jq -r .auth_info.Signature)"
 keyPairId="$(echo "$auth" | jq -r .auth_info.\"Key-Pair-Id\")"
 
 authString='?pfCd='$pfcd'&Policy='$policy'&Signature='$signature'&Key-Pair-Id='$keyPairId
+
+# Download the book's metadata
+curl "https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/configuration_pack.json$authString" > configuration_pack.json
