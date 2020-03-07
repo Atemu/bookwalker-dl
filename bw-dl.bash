@@ -8,3 +8,4 @@ cid="$1"
 auth="$(curl "https://viewer-trial.bookwalker.jp/trial-page/c?cid=$cid&BID=0")"
 
 pfcd="$(echo "$auth" | jq -r .auth_info.pfCd)"
+policy="$(echo "$auth" | jq -r .auth_info.Policy)"
