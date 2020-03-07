@@ -12,3 +12,4 @@ policy="$(echo "$auth" | jq -r .auth_info.Policy)"
 signature="$(echo "$auth" | jq -r .auth_info.Signature)"
 keyPairId="$(echo "$auth" | jq -r .auth_info.\"Key-Pair-Id\")"
 
+authString='?pfCd='$pfcd'&Policy='$policy'&Signature='$signature'&Key-Pair-Id='$keyPairId
