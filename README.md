@@ -1,5 +1,4 @@
-This tool is supposed to help you make a private copy of bookwalker books that are available publicly under their `viewer-trial` subdomain.  
-It might work for others too with a few cookies and tweaks but that's not my goal here.
+This tool is helps you make private copies of bookwalker books that are available publicly under the `viewer-trial` subdomain.  
+It might work for other books too but that's not my goal here and probably doesn't work (it might with a few cookies and tweaks though).
 
-This is very much a WIP but currently it takes a cid (Content ID, the UUID-like string in the bw URLs), fetches auth tokens and uses them to download a book's metadata. This metadata file holds information about the chapters (each key is a chapter).  
-The individual images of a chapter are available under `$chapterName/$page.jpeg$authTokenString`.
+The tool takes a cid (the UUID-like strings in the bookwalker URLs) as its only argument and prints the URLs to every page of the book in order. You can use a download tool of your choice to download the list.
