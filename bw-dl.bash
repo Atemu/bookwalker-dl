@@ -19,3 +19,8 @@ curl "https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_defau
 
 # configuration.contents is an array that contains the chapters with metadata in order
 numChapters="$(jq '.configuration.contents | length' configuration_pack.json)"
+
+for chapter in `seq 0 $[numChapters - 1]` ; do
+    # Chapter metadata is indexed by its path
+    keyName="$(jq -r ".configuration.contents[$chapter].file" configuration_pack.json)"
+done
