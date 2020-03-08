@@ -23,4 +23,5 @@ numChapters="$(jq '.configuration.contents | length' configuration_pack.json)"
 for chapter in `seq 0 $[numChapters - 1]` ; do
     # Chapter metadata is indexed by its path
     keyName="$(jq -r ".configuration.contents[$chapter].file" configuration_pack.json)"
+    numPages=$(jq -r .\"$keyName\".FileLinkInfo.PageCount configuration_pack.json)
 done
