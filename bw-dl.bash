@@ -16,3 +16,6 @@ authString='?pfCd='$pfcd'&Policy='$policy'&Signature='$signature'&Key-Pair-Id='$
 
 # Download the book's metadata
 curl "https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/configuration_pack.json$authString" > configuration_pack.json
+
+# configuration.contents is an array that contains the chapters with metadata in order
+numChapters="$(jq '.configuration.contents | length' configuration_pack.json)"
