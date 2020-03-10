@@ -42,6 +42,10 @@ bookName="${bookName##*\"}"
 echo "$bookName" > "$bookPath/name"
 echo "$cid" > "$bookPath/cid"
 
+# This directory will contain sequentially named links to the pages' actual
+# locations under their chapters/
+mkdir -p "$bookPath/pages"
+
 for chapter in `seq 0 $[numChapters - 1]` ; do
     # Chapter metadata is indexed by its path
     keyName="$(echo $metadata | jq -r ".configuration.contents[$chapter].file")"
