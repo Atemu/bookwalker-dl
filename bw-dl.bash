@@ -73,5 +73,11 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
             # downloaded files
             curl $pageURL > "$pagePath".tmp && mv "$pagePath".tmp "$pagePath"
         fi
+
+        # Create a symlink for every pages/page.jpg to the chapter path it's
+        # actually stored under
+        if [ ! -f "$bookPath/pages/$pageCounter.jpg" ] ; then
+            ln -s --relative "$pagePath" "$bookPath/pages/$pageCounter.jpg"
+        fi
     done
 done
