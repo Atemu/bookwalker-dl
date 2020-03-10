@@ -56,5 +56,8 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
         # The keyName is the path to the page's dir, we can simply put it in the URL
         pageURL="https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/$keyName/$pageNum.jpeg$authString"
         echo "$pageURL"
+
+        # The path the page will be downloaded to
+        pagePath="$chapterPath"/"$pageNum".jpg
     done
 done
