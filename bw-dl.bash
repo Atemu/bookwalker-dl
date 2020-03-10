@@ -30,6 +30,17 @@ echo "$metadata" | jq . > "$bookPath"/metadata.json
 # configuration.contents is an array that contains the chapters with metadata in order
 numChapters="$(echo $metadata | jq '.configuration.contents | length')"
 
+# The bookName is not referenced in the metadata but lpi contains a website that
+# contains the bookName
+lpi="$(curl "https://viewer-trial.bookwalker.jp/trial-page/lpi?cid=$cid&BID=0")"
+bookPage="$(echo $lpi | jq -r .iframe)"
+# A bit of shell magic to extract the right string from the website
+bookName="$(curl $bookPage | grep "alt=" | head -n1)"
+bookName="${bookName%\"*}"
+bookName="${bookName##*\"}"
+
+echo "$bookName" > "$bookPath/name"
+
 for chapter in `seq 0 $[numChapters - 1]` ; do
     # Chapter metadata is indexed by its path
     keyName="$(echo $metadata | jq -r ".configuration.contents[$chapter].file")"
