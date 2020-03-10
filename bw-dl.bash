@@ -45,6 +45,8 @@ echo "$cid" > "$bookPath/cid"
 # This directory will contain sequentially named links to the pages' actual
 # locations under their chapters/
 mkdir -p "$bookPath/pages"
+# We need to keep track of the page we're at (sequentially)
+pageCounter=0
 
 for chapter in `seq 0 $[numChapters - 1]` ; do
     # Chapter metadata is indexed by its path
@@ -57,6 +59,8 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
     mkdir -p "$chapterPath"
 
     for pageNum in `seq 0 $[numPages - 1]` ; do
+        pageCounter=$[pageCounter + 1]
+
         # The keyName is the path to the page's dir, we can simply put it in the URL
         pageURL="https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/$keyName/$pageNum.jpeg$authString"
 
