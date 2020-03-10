@@ -40,6 +40,7 @@ bookName="${bookName%\"*}"
 bookName="${bookName##*\"}"
 
 echo "$bookName" > "$bookPath/name"
+echo "$cid" > "$bookPath/cid"
 
 for chapter in `seq 0 $[numChapters - 1]` ; do
     # Chapter metadata is indexed by its path
