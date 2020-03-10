@@ -25,6 +25,8 @@ mkdir -p "$bookPath"
 # Download the book's metadata
 metadata="$(curl "https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/configuration_pack.json$authString")"
 
+echo "$metadata" | jq . > "$bookPath"/metadata.json
+
 # configuration.contents is an array that contains the chapters with metadata in order
 numChapters="$(echo $metadata | jq '.configuration.contents | length')"
 
