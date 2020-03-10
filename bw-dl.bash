@@ -49,7 +49,7 @@ mkdir -p "$bookPath/pages"
 pageCounter=0
 
 for chapter in `seq 0 $[numChapters - 1]` ; do
-    # Chapter metadata is indexed by its path
+    # Chapter metadata is indexed by its (relative) path
     keyName="$(echo $metadata | jq -r ".configuration.contents[$chapter].file")"
     numPages=$(echo $metadata | jq -r .\"$keyName\".FileLinkInfo.PageCount)
 
