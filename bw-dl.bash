@@ -52,8 +52,8 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
     chapterPath="$bookPath"/chapters/"$chapterName"
     mkdir -p "$chapterPath"
 
-    for page in `seq 0 $[numPages - 1]` ; do
+    for pageNum in `seq 0 $[numPages - 1]` ; do
         # The keyName is the patch, we can simply put it in the URL
-        echo "https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/$keyName/$page.jpeg$authString"
+        echo "https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/$keyName/$pageNum.jpeg$authString"
     done
 done
