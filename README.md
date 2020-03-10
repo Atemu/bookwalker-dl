@@ -12,6 +12,8 @@ In this directory the tool creates:
 * `chapters/`: A directory with all chapters as sub-directories that contain the individual pages' images
 * `pages/`: A directory with sequentially named symlinks to the chapters' pages
 
+Dependencies are listed in `shell.nix`, they should be pretty clear even if you don't use Nix.
+
 # License
 
 This project is licensed under the GPLv2 or, at your choice, any later version released by the Free Software Foundation.
