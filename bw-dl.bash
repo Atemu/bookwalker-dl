@@ -55,9 +55,15 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
     for pageNum in `seq 0 $[numPages - 1]` ; do
         # The keyName is the path to the page's dir, we can simply put it in the URL
         pageURL="https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/$keyName/$pageNum.jpeg$authString"
-        echo "$pageURL"
 
         # The path the page will be downloaded to
         pagePath="$chapterPath"/"$pageNum".jpg
+
+        # Download the page's image if it doesn't exist already
+        if [ ! -f "$pagePath" ] ; then
+            # Download to temp file and then move it to avoid skipping partially
+            # downloaded files
+            curl $pageURL > "$pagePath".tmp && mv "$pagePath".tmp "$pagePath"
+        fi
     done
 done
