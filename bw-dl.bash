@@ -49,6 +49,8 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
 
     # "item/xhtml/p-003.xhtml" -> "p-001.xhtml"
     chapterName="$(basename "$keyName")"
+    chapterPath="$bookPath"/chapters/"$chapterName"
+    mkdir -p "$chapterPath"
 
     for page in `seq 0 $[numPages - 1]` ; do
         # The keyName is the patch, we can simply put it in the URL
