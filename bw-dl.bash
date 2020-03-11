@@ -18,12 +18,14 @@ keyPairId="$(echo "$auth" | jq -r .auth_info.\"Key-Pair-Id\")"
 
 authString='?pfCd='$pfcd'&Policy='$policy'&Signature='$signature'&Key-Pair-Id='$keyPairId
 
+baseURL="https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default"
+
 # If the variable is empty, it'll download to ./
 bookPath="$downloadDir./$cid"
 mkdir -p "$bookPath"
 
 # Download the book's metadata
-metadata="$(curl "https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/configuration_pack.json$authString")"
+metadata="$(curl "$baseURL/configuration_pack.json$authString")"
 
 echo "$metadata" | jq . > "$bookPath"/metadata.json
 
@@ -62,7 +64,7 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
         pageCounter=$[pageCounter + 1]
 
         # The keyName is the path to the page's dir, we can simply put it in the URL
-        pageURL="https://viewer-epubs-trial.bookwalker.jp/special/bw/$cid/SVGA/normal_default/$keyName/$pageNum.jpeg$authString"
+        pageURL="$baseURL/$keyName/$pageNum.jpeg$authString"
 
         # The path the page will be downloaded to
         pagePath="$chapterPath"/"$pageNum".jpg
