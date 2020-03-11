@@ -49,6 +49,7 @@ bookName="${bookName##*\"}"
 
 echo "$bookName" > "$bookPath/name"
 echo "$cid" > "$bookPath/cid"
+echo "$cty" > "$bookPath/isManga"
 
 # This directory will contain sequentially named links to the pages' actual
 # locations under their chapters/
