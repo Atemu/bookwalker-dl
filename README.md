@@ -11,8 +11,11 @@ In this directory the tool creates:
 * `metadata.json`: Metadata about chapters and pages (mostly used internally but also contains things like page- and chapter names)
 * `chapters/`: A directory with all chapters as sub-directories that contain the individual pages' images
 * `pages/`: A directory with sequentially named symlinks to the chapters' pages
+* `isManga`: A file that contains 1 if the downloaded book is a manga and 0 if it isn't
 
 Dependencies are listed in `shell.nix`, they should be pretty clear even if you don't use Nix.
+
+Manga are supported but their images will be jumbled. The jumbling is probably reversible but this program can't do that yet.
 
 # License
 
