@@ -12,6 +12,7 @@ In this directory the tool creates:
 * `chapters/`: A directory with all chapters as sub-directories that contain the individual pages' images
 * `pages/`: A directory with sequentially named symlinks to the chapters' pages
 * `isManga`: A file that contains 1 if the downloaded book is a manga and 0 if it isn't
+* `progress`: A file that contains the already downloaded pages while the script is running. If it still exists after the script finished running, something went wrong!
 
 Dependencies are listed in `shell.nix`, they should be pretty clear even if you don't use Nix.
 

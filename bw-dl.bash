@@ -57,6 +57,9 @@ mkdir -p "$bookPath/pages"
 # We need to keep track of the page we're at (sequentially)
 pageCounter=0
 
+# Truncate the progress file
+> "$bookPath/progress"
+
 for chapter in `seq 0 $[numChapters - 1]` ; do
     # Chapter metadata is indexed by its (relative) path
     keyName="$(echo $metadata | jq -r ".configuration.contents[$chapter].file")"
@@ -77,10 +80,13 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
         pagePath="$chapterPath"/"$pageNum".jpg
 
         # Download the page's image if it doesn't exist already
-        if [ ! -f "$pagePath" ] ; then
+        if [ -f "$pagePath" ] ; then
+            # The page has already been downloaded, mark it as complete
+            echo "$pagePath" >> "$bookPath/progress"
+        else
             # Download to temp file and then move it to avoid skipping partially
             # downloaded files
-            curl $pageURL > "$pagePath".tmp && mv "$pagePath".tmp "$pagePath"
+            curl $pageURL > "$pagePath".tmp && mv "$pagePath".tmp "$pagePath" && echo "$pagePath" >> "$bookPath/progress"
         fi
 
         # Create a symlink for every pages/page.jpg to the chapter path it's
@@ -90,3 +96,12 @@ for chapter in `seq 0 $[numChapters - 1]` ; do
         fi
     done
 done
+
+if [ "$(wc -l < "$bookPath/progress")" == "$pageCounter" ] ; then
+    # Delete the progress file, we're done.
+    # This file can therefore be used to find uninished downloads
+    rm "$bookPath/progress" && exit 0
+else
+    echo "The number of downloaded pages does not equal the total number of pages, something must've gone wrong!"
+    exit 1
+fi
