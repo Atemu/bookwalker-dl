@@ -22,6 +22,8 @@ cty="$(echo "$auth" | jq -r .\"cty\")" # whether or not the book is a Manga
 
 baseURL="$(echo "$auth" | jq -r .url)normal_default/"
 
+bookName="$(echo "$auth" | jq -r .cti)"
+
 # If the variable is empty, it'll download to ./
 bookPath="$downloadDir./$cid"
 mkdir -p "$bookPath"
@@ -33,15 +35,6 @@ echo "$metadata" | jq . > "$bookPath"/metadata.json
 
 # configuration.contents is an array that contains the chapters with metadata in order
 numChapters="$(echo $metadata | jq '.configuration.contents | length')"
-
-# The bookName is not referenced in the metadata but lpi contains a website that
-# contains the bookName
-lpi="$(curl "https://viewer-trial.bookwalker.jp/trial-page/lpi?cid=$cid&BID=0")"
-bookPage="$(echo $lpi | jq -r .iframe)"
-# A bit of shell magic to extract the right string from the website
-bookName="$(curl $bookPage | grep "alt=" | head -n1)"
-bookName="${bookName%\"*}"
-bookName="${bookName##*\"}"
 
 echo "$bookName" > "$bookPath/name"
 echo "$cid" > "$bookPath/cid"
