@@ -29,9 +29,9 @@ bookPath="$downloadDir./$cid"
 mkdir -p "$bookPath"
 
 # Download the book's metadata
-metadata="$(curl "${baseURL}configuration_pack.json$authString")"
+metadata="$bookPath"/metadata.json
 
-echo "$metadata" | jq . > "$bookPath"/metadata.json
+curl "${baseURL}configuration_pack.json$authString" | jq . > "$metadata"
 
 # configuration.contents is an array that contains the chapters with metadata in order
 numChapters="$(echo $metadata | jq '.configuration.contents | length')"
@@ -51,8 +51,8 @@ pageCounter=0
 
 for chapter in `seq 0 $[numChapters - 1]` ; do
     # Chapter metadata is indexed by its (relative) path
-    keyName="$(echo $metadata | jq -r ".configuration.contents[$chapter].file")"
-    numPages=$(echo $metadata | jq -r .\"$keyName\".FileLinkInfo.PageCount)
+    keyName="$(jq -r ".configuration.contents[$chapter].file" "$metadata")"
+    numPages=$(jq -r .\"$keyName\".FileLinkInfo.PageCount "$metadata")
 
     # "item/xhtml/p-003.xhtml" -> "p-001.xhtml"
     chapterName="$(basename "$keyName")"
