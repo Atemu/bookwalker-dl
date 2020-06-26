@@ -34,7 +34,7 @@ metadata="$bookPath"/metadata.json
 curl "${baseURL}configuration_pack.json$authString" | jq . > "$metadata"
 
 # configuration.contents is an array that contains the chapters with metadata in order
-numChapters="$(echo $metadata | jq '.configuration.contents | length')"
+numChapters="$(jq '.configuration.contents | length' "$metadata")"
 
 echo "$bookName" > "$bookPath/name"
 echo "$cid" > "$bookPath/cid"
