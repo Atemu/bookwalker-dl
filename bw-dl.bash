@@ -20,7 +20,10 @@ authString='?pfCd='$pfcd'&Policy='$policy'&Signature='$signature'&Key-Pair-Id='$
 
 cty="$(echo "$auth" | jq -r .\"cty\")" # whether or not the book is a Manga
 
-baseURL="$(echo "$auth" | jq -r .url)normal_default/"
+baseURL="$(echo "$auth" | jq -r .url)"
+if ((cty == 0)) ; then
+baseURL="$baseURL"normal_default/
+fi
 
 bookName="$(echo "$auth" | jq -r .cti)"
 
